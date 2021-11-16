@@ -6,3 +6,4 @@ Resources:
 - https://medium.com/@elizabethjafek/scraping-and-wrangling-congressional-bill-data-bddc53b5cc93
 - https://www.govinfo.gov/bulkdata/BILLSTATUS/
 - https://github.com/usgpo/bill-status/blob/master/BILLSTATUS-XML_User_User-Guide.md
+- https://www.congress.gov/help/field-values/action-codes
