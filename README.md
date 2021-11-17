@@ -7,6 +7,8 @@ Resources:
 - https://www.govinfo.gov/bulkdata/BILLSTATUS/
 - https://github.com/usgpo/bill-status/blob/master/BILLSTATUS-XML_User_User-Guide.md
 - https://www.congress.gov/help/field-values/action-codes
+- https://blog.appliedinformaticsinc.com/how-to-parse-and-convert-xml-to-csv-using-python/
+- https://www.geeksforgeeks.org/convert-xml-to-csv-in-python/
 
 Working File:
 - https://docs.google.com/spreadsheets/d/18D2nWpD3YZnoF_xOAkAS4QMoz3WJneeTwO0251v3cg4/edit#gid=0
