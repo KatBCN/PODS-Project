@@ -141,6 +141,11 @@ for idx, row in billactions.iterrows():
         billactions = billactions.drop(idx)
     last = row['actionCode']
 
+#get action code meanings
+actionCode_dict = pd.read_csv('../actionCode_dict.csv.txt', sep = '\t', )[['Code','Action']]
+actionCode_dict.columns = ['actionCode','actionName']
+billactions = pd.merge(billactions, actionCode_dict, how = 'left', on = 'actionCode')
+billactions = billactions[['fullDate','actionCode', 'type',  'sourceSystem/name', 'actionName', 'text']]
 
 #save to csv
 billactions.to_csv('BillActions.csv', index=False)
