@@ -1,0 +1,26 @@
+fullDate,actionCode,type,sourceSystem/name,text
+2021-01-04 00:00:00,1000,IntroReferral,Library of Congress,Introduced in House
+2021-01-04 00:00:00,H11100,IntroReferral,House floor actions,"Referred to the Committee on House Administration, and in addition to the Committees on Intelligence (Permanent Select), the Judiciary, Oversight and Reform, Science, Space, and Technology, Education and Labor, Ways and Means, Financial Services, Ethics, Homeland Security, and Armed Services, for a period to be subsequently determined by the Speaker, in each case for consideration of such provisions as fall within the jurisdiction of the committee concerned."
+2021-01-04 00:00:00,Intro-H,IntroReferral,Library of Congress,Introduced in House
+2021-01-04 00:00:00,,Committee,House committee actions,Referred to the Subcommittee on Research and Technology.
+2021-03-01 19:09:16,H1L210,Floor,House floor actions,Rules Committee Resolution H. Res. 179 Reported to House. Rule provides for consideration of H.R. 1 and H.R. 1280. Rule provides for 1 hour of general debate on H.R. 1 and one motion to recommit. Rule provides for 1 hour of general debate on H.R. 1280 and one motion to recommit.
+2021-03-02 09:14:36,H30000,Floor,House floor actions,Considered under the provisions of rule H. Res. 179. (consideration: CR H886-1009; text: CR H886-972)
+2021-03-02 09:14:41,H8D000,Floor,House floor actions,Rule provides for consideration of H.R. 1 and H.R. 1280. Rule provides for 1 hour of general debate on H.R. 1 and one motion to recommit. Rule provides for 1 hour of general debate on H.R. 1280 and one motion to recommit.
+2021-03-02 18:00:12,H30000,Floor,House floor actions,Considered as unfinished business. (consideration: CR H1009-1010)
+2021-03-02 18:00:26,H8D000,Floor,House floor actions,UNFINISHED BUSINESS - The Chair announced that the unfinished business was the question on agreeing to the amendments which had been debated earlier and on which further proceedings had been postponed.
+2021-03-03 10:35:33,H30000,Floor,House floor actions,Considered as unfinished business. (consideration: CR H1023-1037)
+2021-03-03 10:37:15,H8D000,Floor,House floor actions,"DEBATE - Pursuant to the provisions of H. Res. 179, the House proceeded with 10 minutes of debate on the Lesko amendment No. 28."
+2021-03-03 12:16:22,H30000,Floor,House floor actions,Considered as unfinished business. (consideration: CR H1037-1038)
+2021-03-03 13:52:11,H35000,Floor,House floor actions,The previous question was ordered pursuant to the rule.
+2021-03-03 13:52:55,H8D000,Floor,House floor actions,"POSTPONED PROCEEDINGS - Pursuant to clause 1(c) of Rule 19, further consideration of H.R. 1 was postponed."
+2021-03-03 18:15:48,H30000,Floor,House floor actions,Considered as unfinished business. (consideration: CR H1039)
+2021-03-03 18:16:28,H36200,Floor,House floor actions,"Mr. Davis, Rodney moved to recommit to the Committee on House Administration. (text: CR H1039)"
+2021-03-03 18:16:45,H8A000,Floor,House floor actions,The previous question on the motion to recommit was ordered pursuant to the rule.
+2021-03-03 18:16:46,H8D000,Floor,House floor actions,"POSTPONED PROCEEDINGS - The Chair put the question on the motion to recommit and by voice vote, announced that the noes had prevailed. Mr. Rodney Davis (IL) demanded the yeas and nays and the Chair postponed further proceedings until a time to be announced."
+2021-03-03 21:30:33,H30000,Floor,House floor actions,Considered as unfinished business. (consideration: CR H1071-1072)
+2021-03-03 22:20:54,H36210,Floor,House floor actions,On motion to recommit Failed by the Yeas and Nays: 210 - 219 (Roll no. 61).
+2021-03-03 23:05:36,8000,Floor,Library of Congress,Passed/agreed to in House: On passage Passed by the Yeas and Nays: 220 - 210 (Roll no. 62).
+2021-03-03 23:05:36,H37100,Floor,House floor actions,On passage Passed by the Yeas and Nays: 220 - 210 (Roll no. 62).
+2021-03-03 23:05:39,H38310,Floor,House floor actions,Motion to reconsider laid on the table Agreed to without objection.
+2021-03-03 23:05:48,H38900,Floor,House floor actions,"The Clerk was authorized to correct section numbers, punctuation, and cross references, and to make other necessary technical and conforming corrections in the engrossment of H.R. 1."
+2021-03-11 00:00:00,,IntroReferral,Senate,Received in the Senate.

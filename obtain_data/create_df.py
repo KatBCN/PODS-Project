@@ -3,9 +3,10 @@ import pandas as pd
 import os
 
 ###SET WORKING DIRECTORY
-os.chdir('/home/irene/PycharmProjects/PODS_Bills')
+os.chdir('PODS-Project/obtain_data')
+
 print(os.getcwd())
-files = os.listdir('data')  #all xml files stored in data
+files = os.listdir()  #all xml files stored in data
 
 #APPLY READING TO EACH FILE AND MERGE THEM...
 #for file in files:
@@ -17,6 +18,7 @@ data = {'billNumber': [],
         'billType': [],
         'congress': [],
         'actionDate': [],
+        'actionCode': [],
         'committees': [],
         'links': [],
         'text': [],
@@ -30,12 +32,12 @@ print(df)
 etree = ET.parse('data/BILLSTATUS-117hr1.xml')
 root = etree.getroot()
 
-#print(root[0].tag)
-#print(root[1])
-#print(root[0][0])
-#print(root[0][1])
-#print(root[0][2])
-#print(root[0][12])
+print(root[0].text)
+print(root[0])
+print(root[0][0])
+print(root[0][1])
+print(root[0][2])
+print(root[0][12])
 
 ###ADD VALUES TO DATAFRAME
 #Default values for bill information:
@@ -94,3 +96,51 @@ for bill_info in root[0]:
 print(df)
 df.to_csv(index=False)
 print('saved')
+
+### Mateo's code for a new log.
+
+### Create dataframe with actions for 1 bill
+#get actions
+billactions = {}
+counter = 0
+for action in root.findall("./bill/actions/item"):
+    print("-----", counter, "-----")
+    billactions[counter] = {}
+    billactions[counter]["actionDate"] = action.find("actionDate").text if action.find("actionDate") is not None else None
+    billactions[counter]["actionTime"] = action.find("actionTime").text if action.find("actionTime") is not None else None
+    billactions[counter]["actionCode"] = action.find("actionCode").text if action.find("actionCode") is not None else None
+    billactions[counter]["type"] = action.find("type").text if action.find("type") is not None else None
+    billactions[counter]["congress"] = action.find("congress").text if action.find("congress") is not None else None
+    billactions[counter]["sourceSystem/code"] = action.find("sourceSystem/code").text if action.find("sourceSystem/code") is not None else None
+    billactions[counter]["sourceSystem/name"] = action.find("sourceSystem/name").text if action.find("sourceSystem/name") is not None else None
+    billactions[counter]["text"] = action.find("text").text if action.find("text") is not None else None
+    counter += 1
+
+#convert to df
+billactions = pd.DataFrame.from_dict(billactions, orient = 'index')
+
+#create column with date-time. actions with no actionTime are given an arbitrary time '00:00:00' - May create biases.
+fulldates = []
+for idx, row in billactions.iterrows():
+    if row['actionTime'] is None:
+        fulldates.append(row['actionDate'] + ' ' + '00:00:00')
+    else:
+        fulldates.append(row['actionDate'] + ' ' + row['actionTime'])
+billactions['fullDate'] = fulldates
+billactions['fullDate'] = pd.to_datetime(billactions['fullDate'])
+
+#sort by date, remove previous date,time, congress, and sourceSystem/code columns. Also removing duplicate actions
+billactions = billactions.sort_values(by = ['fullDate', 'actionCode'], ascending = True)
+billactions = billactions[['fullDate','actionCode', 'type',  'sourceSystem/name', 'text']]
+billactions = billactions.drop_duplicates()
+
+#deduplicate consecutive actionCodes that belong to actual, different actions
+last = 'null'
+for idx, row in billactions.iterrows():
+    if row['actionCode'] == last:
+        billactions = billactions.drop(idx)
+    last = row['actionCode']
+
+
+#save to csv
+billactions.to_csv('BillActions.csv', index=False)
