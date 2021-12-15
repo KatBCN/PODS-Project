@@ -12,6 +12,7 @@ Resources:
 - Convert XML to CSV in Python: https://www.geeksforgeeks.org/convert-xml-to-csv-in-python/
 - Types of Legislative Bills: https://www.house.gov/the-house-explained/the-legislative-process/bills-resolutions
 - List of US Presidential Vetoes: https://en.wikipedia.org/wiki/List_of_United_States_presidential_vetoes
+- Blog post about action codes: https://blogs.loc.gov/law/2021/01/advanced-searches-using-legislative-action-codes-on-congress-gov/
 
 Working File:
 - Spreadsheet of Containers with dates in XML: https://docs.google.com/spreadsheets/d/18D2nWpD3YZnoF_xOAkAS4QMoz3WJneeTwO0251v3cg4/edit#gid=0
