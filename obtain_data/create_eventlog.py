@@ -82,6 +82,24 @@ for file_zip in files:
                 df = df.append(billactions)
         print('Finished', unzipped_file.filename[72:], datetime.now(), 'took', datetime.now() - started)
 
+df.to_csv('data/117Congress_BillActions_RAW_original_file.csv', index=False)
+
+def get_redundant_indexs(x):
+    x = x.reset_index()
+    actionName= x["actionName"].values
+    ind = x['index'].values
+    if(len(x["text"])>1):
+        for i,val in enumerate(actionName):
+            if pd.isnull(val) or pd.isna(val) or val == None or val == 'None':
+                redundant_indexs.append(ind[i])
+    return id
+df = df.reset_index(drop=True)
+redundant_indexs = []
+redundant_df = df[['billTitle','billNumber','billType','fullDate','text','actionName']].groupby(['billTitle','billNumber','billType','fullDate','text']).apply(lambda x: get_redundant_indexs(x))
+df_log = df.loc[redundant_indexs] #Keeps a log of deleted data
+df = df.drop(index=redundant_indexs)
+df_log.to_csv('data/117Congress_BillActions_RAW_deleted_records.csv')
+
 print('Finished process', datetime.now(), 'took', datetime.now() - startime)
 
 df.to_csv('data/117Congress_BillActions_RAW.csv', index=False)
