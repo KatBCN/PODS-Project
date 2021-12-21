@@ -53,23 +53,25 @@ def get_actionName_and_project(billactions):
     return billactions
 
 
-def deduplicate_consecutive_actions(billactions):
-    last_action = 'null'
-    last_day = 'null'
-    for idx, row in billactions.iterrows():
-        if last_action is None and row['actionCode'] is None:
-            continue
-        if row['actionCode'] == last_action and row['actionDate'] == last_day:
-            billactions = billactions.drop(idx)
-        last_action = row['actionCode']
-        last_day = row['actionDate']
-    return billactions
+# def deduplicate_consecutive_actions(billactions):
+#     last_action = 'null'
+#     last_day = 'null'
+#     for idx, row in billactions.iterrows():
+#         if last_action is None and row['actionCode'] is None:
+#             continue
+#         if row['actionCode'] == last_action and row['actionDate'] == last_day:
+#             billactions = billactions.drop(idx)
+#         last_action = row['actionCode']
+#         last_day = row['actionDate']
+#     return billactions
 
 
 #Get dir
-os.chdir('/home/irene/PycharmProjects/PODS_Bills')
-#read actionCode_dict
-actionCode_dict = pd.read_csv('data/actionCode_dict.csv', sep = '\t', )[['Code','Action']]
+# os.chdir('/home/irene/PycharmProjects/PODS_Bills')
+os.chdir('C:/Users/mateo/PycharmProjects/PODS-Project/obtain_data/')
+# #read actionCode_dict
+actionCode_df = pd.read_csv('data/updatedCodes_dict.csv', sep = ',', )
+actionCode_dict = actionCode_df[['Code','Action']]
 actionCode_dict.columns = ['actionCode','actionName']
 #read XMLs and output raw dataframe to csv
 startime = datetime.now()
@@ -77,7 +79,7 @@ print('Starting process', startime)
 df_all = pd.DataFrame()
 listdir = os.listdir('data')
 for congress in listdir:
-    if os.path.isdir('data/'+congress):
+    if os.path.isdir('data/'+congress) and congress[1] == '1':
         print(congress)
         df_congress = pd.DataFrame()
         files = os.listdir('data/'+congress)
@@ -99,6 +101,7 @@ for congress in listdir:
         print('Finished process', datetime.now(), 'took', datetime.now() - startime)
         df_congress.to_csv('data/event_logs/%sCongress_BillActions_RAW.csv' % congress, index=False)
 df_all.to_csv('data/event_logs/ALLCongress_BillActions_RAW.csv', index=False)
+print(df_all.shape)
 
 
 
@@ -107,7 +110,7 @@ df_all.to_csv('data/event_logs/ALLCongress_BillActions_RAW.csv', index=False)
 # Import action code dictionary from Github link
 # dfRaw = df
 dfRaw = pd.read_csv('data/event_logs/ALLCongress_BillActions_RAW.csv')
-dfRaw = dfRaw.astype({'billNumber':object, 'congress':object, 'fullDate':'datetime64'})
+dfRaw = dfRaw.astype({'billNumber': object, 'congress': object, 'fullDate': 'datetime64'})
 print('duplicated rows', sum(dfRaw.duplicated()))
 
 actionCode_df = pd.read_csv('data/updatedCodes_dict.csv')
@@ -211,41 +214,18 @@ df = dfRaw.copy()
 df['actionCode'] = df.apply(lambda row: fillCode(row) if pd.isnull(row['actionCode']) else row['actionCode'], axis=1)
 
 # Number of null actionCodes in original data
-print(dfRaw.actionCode.isna().sum(), "nulls before assigning text to code")
-print(df.actionCode.isna().sum(), "nulls after assigning text to code")
+print(dfRaw.actionCode.isna().sum(), "null codes before assigning text to code")
+print(df.actionCode.isna().sum(), "null codes after assigning text to code\n")
 
 
+#merge actionNames
+print(df.actionName.isna().sum(), "null names before assigning code to name")
 
+df = pd.merge(df.drop('actionName', axis = 1), actionCode_df, how='left', on='actionCode')
 
-#clean data (remove sequentially repeated actions, remove redundant actions, hardcode known action sequences, etc)
+print(df.actionName.isna().sum(), "null names after assigning code to name\n\nTop 5 codes without name and their counts:")
+print(df[df.actionName.isna()]['actionCode'].value_counts()[:5])
 
-new_dict = {'Intro-H' : 'Introduced in House', # IntroReferral
-            'H30300' : 'Motion to suspend rules and pass bill', # House Floor
-            'H37220' : 'Further proceedings postponed', #  House Floor
-            'H1B000' : 'Proceedings are considered vacated', #  Senate Calendars
-            'SenateCal' : 'Placed on Senate Legislative Calendar',
-            'E40000' : 'Became Public Law', # President # Generalization needed
-            'H37100' : 'Passed/agreed to in House', # House Floor
-            'H36210' : 'Motion to recommit Failed', # House Floor
-            'H36200' : 'Motion to recommit to Committee', # House Floor - Should occur prior to H36210
-            'H8A000' : "Motion to recommit ordered", # House Floor
-            'H38800' : 'Title of measure amended', # House Floor
-            'H38900' : 'Clerk technical correction', # House Floor
-            '19500' : actionCode_dict['19000'], # House Floor - same as 19000, but possibly after senate amendment
-            'H41931' : 'Motion to Reconsider Agreed', # House Resolving Differences
-            'H41610' : actionCode_dict['19000'], # House Resolving Differences - same as 19000, but possibly after senate amendment
-            'H30200' : 'Motion to Consider', # House Floor
-            'H12420' : 'Placed on House Calendar', # House Calendars
-            'H11210' : 'House committee time extension', # House Intro Referral - same as 4900
-            'H82000' : 'Motion to table Motion to Reconsider', # House Resolving Differences
-            'H36610' : 'Motion to table Motion to Reconsider Agreed', # House Floor
-            'H36600' : 'Motion to table Motion to Reconsider', # House Floor - same as H82000
-            '20500' : actionCode_dict['20000'], # Senate Resolving Differences - same as 20000, but possibly after house amendment
-            'H41400' : actionCode_dict['H35000']} # House Resolving Differences - same as H35000
-
-new_dict_df = pd.DataFrame(new_dict.items(), columns=['actionCode', 'actionName'])
-action_dict_completer = pd.concat([actionCode_df, new_dict_df])
-
-df = pd.merge(df, action_dict_completer, how='left', on='actionCode')
+#output to csv
 df.to_csv('data/event_logs/ALLCongress_Bill_Actions_RAW_filled.csv', index=False)
 
