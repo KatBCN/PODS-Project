@@ -124,13 +124,24 @@ H30800,Consideration by House
 H38410,Motion to table Motion to Reconsider Agreed
 H40130,Resolving differences -- House actions
 H41930,Motion To Reconsider Results
-H36110,On motion to recommit with instructions Failed
-H36100,Moved to recommit with instructions
-H32700,Committee of the Whole House leaves H.R. as unfinished business
-H32050,The House resolved into Committee of the Whole House - further consideration
-H32340,Committee moved to rise
-H32341,Committee agrees to rise
-H32020,House resolved itself into the Committee of the Whole House on the state of the Union
-H32400,Congressperson designed as chair of the Committee
-H32600,House rose from the Committee of the Whole House on the state of the Union
+H11100-A,Referred to Multiple Committees
+H36100,Motion to recommit to Committee
+H36110,Motion to recommit Failed
+H32700,Leaves as unfinished business
+H32050,Resolved into Committee of the Whole House
+H32340,Motion to rise
+H32341,Motion to rise agreed
+H32020,Resolved into Committee of the Whole House
+H32600,House rose to report
+H32400,Speaker designated Committee Chairperson
 H41800,Speaker appointed conferees
+H34400,House amendment considered as adopted
+H37210,Further proceedings postponed
+H40142,Further proceedings postponed
+H40200,Conference report considered
+SenateVetoCon,Veto considered in Senate
+SenateVetoRcvd,Veto received in Senate
+H42831,Motion to Reconsider agreed
+H42510,Conference report agreed to in House
+H42300,The previous question was ordered pursuant to the rule
+H12430,Calendar Assignment
