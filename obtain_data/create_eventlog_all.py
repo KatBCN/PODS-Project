@@ -68,7 +68,8 @@ def get_actionName_and_project(billactions):
 
 #Get dir
 # os.chdir('/home/irene/PycharmProjects/PODS_Bills')
-os.chdir('C:/Users/mateo/PycharmProjects/PODS-Project/obtain_data/')
+# os.chdir('C:/Users/mateo/PycharmProjects/PODS-Project/obtain_data/')
+os.chdir('/Users/kat/Documents/PODS/project/PODS-Project/obtain_data')
 # #read actionCode_dict
 actionCode_df = pd.read_csv('data/updatedCodes_dict.csv', sep = ',', )
 actionCode_dict = actionCode_df[['Code','Action']]
@@ -137,7 +138,9 @@ dfS = dfRaw.loc[dfRaw['sourceSystem/name'] == 'Senate']
 # Create subset of data frame where actionCode is missing
 df = dfRaw[dfRaw['actionCode'].isnull()]
 
-def fillCode (row):
+def fillCode (row): 
+  # Updated by Mateo for senate discharge type
+  # Updated by Kat for senate veto type
   """
   A function to fill missing actionCodes. This can be used with
   df['actionCode'] = df.apply (lambda row: fillCode(row) if pd.isnull(row['actionCode']) else row['actionCode'], axis=1)
@@ -181,6 +184,14 @@ def fillCode (row):
         return 'H12300'
       if re.match('Motion to discharge Senate Committee*', row['text']) is not None:
         return 'H17000'
+    # Veto codes added by Kat 21 Dec 2021
+    elif row['type'] == "Veto":
+      if "failed" in str.lower(row['text']):
+        return '35000'  # Failed of passage in Senate over veto
+      if "message received" in str.lower(row['text']):
+        return 'SenateVetoRcvd'  # Veto received in Senate
+      if "message considered" in str.lower(row['text']):
+        return 'SenateVetoCon'  # Veto considered in Senate
     # Generic rule based on type for text not matching earlier rules
     elif row['type'] == "Calendars":
       return 'SenateCal' # need to define a code for Senate Calendar and add to dictionary
@@ -204,6 +215,7 @@ def fillCode (row):
         return '16000'  # Senate floor action
   else:
     return row['actionCode']  # do nothing if source system doesn't match rules
+
 
 
 # Create a copy of original raw data to fill missing actionCodes
