@@ -1,0 +1,48 @@
+runfile('/Users/kat/Documents/PODS/project/PODS-Project/obtain_data/create_eventlog_all.py', wdir='/Users/kat/Documents/PODS/project/PODS-Project/obtain_data')
+Starting process 2021-12-22 14:24:39.536056
+116
+Started STATUS-116-sjres.zip 2021-12-22 14:24:39.538147
+Finished STATUS-116-sjres.zip 2021-12-22 14:24:40.088716 took 0:00:00.550574
+Started STATUS-116-hr.zip 2021-12-22 14:24:40.149726
+Finished STATUS-116-hr.zip 2021-12-22 14:28:14.412948 took 0:03:34.263232
+Started STATUS-116-s.zip 2021-12-22 14:28:14.461480
+Finished STATUS-116-s.zip 2021-12-22 14:32:37.729428 took 0:04:23.267960
+Started STATUS-116-hjres.zip 2021-12-22 14:32:37.731857
+Finished STATUS-116-hjres.zip 2021-12-22 14:32:44.416506 took 0:00:06.684658
+Finished process 2021-12-22 14:32:44.416659 took 0:08:04.880604
+117
+Started STATUS-117-sjres.zip 2021-12-22 14:32:44.803921
+Finished STATUS-117-sjres.zip 2021-12-22 14:32:45.878595 took 0:00:01.074682
+Started STATUS-117-hjres.zip 2021-12-22 14:32:45.880459
+Finished STATUS-117-hjres.zip 2021-12-22 14:32:48.157000 took 0:00:02.276547
+Started STATUS-117-hr.zip 2021-12-22 14:32:48.180701
+Finished STATUS-117-hr.zip 2021-12-22 14:45:51.664687 took 0:13:03.483993
+Started STATUS-117-s.zip 2021-12-22 14:45:51.678957
+Finished STATUS-117-s.zip 2021-12-22 14:49:57.371084 took 0:04:05.692147
+Finished process 2021-12-22 14:49:57.371252 took 0:25:17.835197
+115
+Started STATUS-115-hjres.zip 2021-12-22 14:49:57.566502
+Finished STATUS-115-hjres.zip 2021-12-22 14:50:05.470074 took 0:00:07.903580
+Started STATUS-115-sjres.zip 2021-12-22 14:50:05.471529
+Finished STATUS-115-sjres.zip 2021-12-22 14:50:09.250876 took 0:00:03.779354
+Started STATUS-115-hr.zip 2021-12-22 14:50:09.279384
+Finished STATUS-115-hr.zip 2021-12-22 15:13:27.349049 took 0:23:18.069672
+Started STATUS-115-s.zip 2021-12-22 15:13:27.364872
+Finished STATUS-115-s.zip 2021-12-22 15:20:27.131673 took 0:06:59.766809
+Finished process 2021-12-22 15:20:27.131806 took 0:55:47.595751
+(166790, 11)
+45959 actions with null codes before calling fillCode()
+0 actions with null codes after calling fillCode()
+
+45959 actions with null names before calling fillCode()
+45991 actions with null names after calling fillCode()
+51 actions with null names after merging
+
+
+Top 5 codes without name and their counts:
+SenateMotionDischarge    19
+H40210                    4
+H40141                    4
+H32500                    4
+H40300                    3
+Name: actionCode, dtype: int64
