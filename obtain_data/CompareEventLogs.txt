@@ -1,0 +1,180 @@
+Updated: 2021-12-22 14:13:25.878494
+
+Comparing Event Logs:
+ALLCongress_BillActions_RAW.csv
+ALLCongress_Bill_Actions_RAW_filled.csv
+ALLCongress_Bill_Actions_removed.csv
+ALLCongress_Bill_Actions_cleaning.csv
+
+(166790, 11) are the dimensions of ALLCongress_BillActions_RAW.csv
+
+ALLCongress_BillActions_RAW.csv
+Count of actions per source system:
+Library of Congress        71061
+House floor actions        49770
+Senate                     24132
+House committee actions    21827
+Name: sourceSystem/name, dtype: int64
+
+ALLCongress_BillActions_RAW.csv
+Number of actions per bill type:
+HR       125771
+S         37855
+HJRES      1988
+SJRES      1176
+Name: billType, dtype: int64
+
+ALLCongress_BillActions_RAW.csv
+Percentage of action type in all actions:
+IntroReferral           58.252893
+Committee               18.559266
+Floor                   17.456682
+Calendars                1.936567
+President                1.556448
+BecameLaw                1.024642
+Discharge                0.645123
+ResolvingDifferences     0.436477
+NotUsed                  0.107920
+Veto                     0.023982
+Name: type, dtype: float64
+
+ALLCongress_BillActions_RAW.csv
+Number of Unique Action Names in Data:
+71
+
+ALLCongress_BillActions_RAW.csv
+Number of Unique Action Codes in Data:
+110
+
+ALLCongress_BillActions_RAW.csv
+Number of Unique Bill Titles in Data:
+24805
+
+
+(166790, 11) are the dimensions of ALLCongress_Bill_Actions_RAW_filled.csv
+
+ALLCongress_Bill_Actions_RAW_filled.csv
+Count of actions per source system:
+Library of Congress        71061
+House floor actions        49770
+Senate                     24132
+House committee actions    21827
+Name: sourceSystem/name, dtype: int64
+
+ALLCongress_Bill_Actions_RAW_filled.csv
+Number of actions per bill type:
+HR       125771
+S         37855
+HJRES      1988
+SJRES      1176
+Name: billType, dtype: int64
+
+ALLCongress_Bill_Actions_RAW_filled.csv
+Percentage of action type in all actions:
+IntroReferral           58.252893
+Committee               18.559266
+Floor                   17.456682
+Calendars                1.936567
+President                1.556448
+BecameLaw                1.024642
+Discharge                0.645123
+ResolvingDifferences     0.436477
+NotUsed                  0.107920
+Veto                     0.023982
+Name: type, dtype: float64
+
+ALLCongress_Bill_Actions_RAW_filled.csv
+Number of Unique Action Names in Data:
+82
+
+ALLCongress_Bill_Actions_RAW_filled.csv
+Number of Unique Action Codes in Data:
+123
+
+ALLCongress_Bill_Actions_RAW_filled.csv
+Number of Unique Bill Titles in Data:
+24805
+
+
+(25367, 11) are the dimensions of ALLCongress_Bill_Actions_removed.csv
+
+ALLCongress_Bill_Actions_removed.csv
+Count of actions per source system:
+Library of Congress    23998
+House floor actions     1369
+Name: sourceSystem/name, dtype: int64
+
+ALLCongress_Bill_Actions_removed.csv
+Number of actions per bill type:
+HR       24070
+S          839
+HJRES      410
+SJRES       48
+Name: billType, dtype: int64
+
+ALLCongress_Bill_Actions_removed.csv
+Percentage of action type in all actions:
+IntroReferral    89.856901
+Floor             3.413884
+President         3.366579
+BecameLaw         3.362636
+Name: type, dtype: float64
+
+ALLCongress_Bill_Actions_removed.csv
+Number of Unique Action Names in Data:
+3
+
+ALLCongress_Bill_Actions_removed.csv
+Number of Unique Action Codes in Data:
+5
+
+ALLCongress_Bill_Actions_removed.csv
+Number of Unique Bill Titles in Data:
+19240
+
+
+(141423, 11) are the dimensions of ALLCongress_Bill_Actions_cleaning.csv
+
+ALLCongress_Bill_Actions_cleaning.csv
+Count of actions per source system:
+House floor actions        48401
+Library of Congress        47063
+Senate                     24132
+House committee actions    21827
+Name: sourceSystem/name, dtype: int64
+
+ALLCongress_Bill_Actions_cleaning.csv
+Number of actions per bill type:
+HR       101701
+S         37016
+HJRES      1578
+SJRES      1128
+Name: billType, dtype: int64
+
+ALLCongress_Bill_Actions_cleaning.csv
+Percentage of action type in all actions:
+IntroReferral           52.584092
+Committee               21.888236
+Floor                   19.975534
+Calendars                2.283928
+President                1.231766
+Discharge                0.760838
+BecameLaw                0.605276
+ResolvingDifferences     0.514768
+NotUsed                  0.127278
+Veto                     0.028284
+Name: type, dtype: float64
+
+ALLCongress_Bill_Actions_cleaning.csv
+Number of Unique Action Names in Data:
+82
+
+ALLCongress_Bill_Actions_cleaning.csv
+Number of Unique Action Codes in Data:
+121
+
+ALLCongress_Bill_Actions_cleaning.csv
+Number of Unique Bill Titles in Data:
+24805
+
+
