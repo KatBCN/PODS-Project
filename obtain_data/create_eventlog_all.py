@@ -47,7 +47,7 @@ def sort_and_deduplicate_rows(billactions):
 
 
 def get_actionName_and_project(billactions):
-    billactions = pd.merge(billactions, actionCode_dict, how='left', on='actionCode')
+    billactions = pd.merge(billactions, actionCode_df, how='left', on='actionCode')
     billactions = billactions[['billTitle', 'billNumber', 'billType', 'congress', 'fullDate', 'actionCode',
                                'actionName', 'type', 'sourceSystem/name', 'text', 'billOriginalTitle']]
     return billactions
@@ -70,11 +70,14 @@ def get_actionName_and_project(billactions):
 # os.chdir('/home/irene/PycharmProjects/PODS_Bills')
 # os.chdir('C:/Users/mateo/PycharmProjects/PODS-Project/obtain_data/')
 os.chdir('/Users/kat/Documents/PODS/project/PODS-Project/obtain_data')
-# #read actionCode_dict
+
+# create actionCode dataframe and dictionary
 actionCode_df = pd.read_csv('data/updatedCodes_dict.csv', sep = ',', )
-actionCode_dict = actionCode_df[['Code','Action']]
-actionCode_dict.columns = ['actionCode','actionName']
-#read XMLs and output raw dataframe to csv
+actionCode_df.columns = ['actionCode','actionName']
+# convert pandas df of action codes to python dictionary
+actionCode_dict = dict(zip(actionCode_df.actionCode, actionCode_df.actionName))
+
+# read XMLs and output raw dataframe to csv
 startime = datetime.now()
 print('Starting process', startime)
 df_all = pd.DataFrame()
@@ -98,6 +101,7 @@ for congress in listdir:
                         billactions = sort_and_deduplicate_rows(billactions)
                         billactions = get_actionName_and_project(billactions)
                         df_all = df_all.append(billactions)
+                        df_congress = df_congress.append(billactions)
                 print('Finished', unzipped_file.filename[72:], datetime.now(), 'took', datetime.now() - started)
         print('Finished process', datetime.now(), 'took', datetime.now() - startime)
         df_congress.to_csv('data/event_logs/%sCongress_BillActions_RAW.csv' % congress, index=False)
@@ -108,35 +112,7 @@ print(df_all.shape)
 
 ### ADD MISSING actionCode AND actionName
 
-# Import action code dictionary from Github link
-# dfRaw = df
-dfRaw = pd.read_csv('data/event_logs/ALLCongress_BillActions_RAW.csv')
-dfRaw = dfRaw.astype({'billNumber': object, 'congress': object, 'fullDate': 'datetime64'})
-print('duplicated rows', sum(dfRaw.duplicated()))
 
-actionCode_df = pd.read_csv('data/updatedCodes_dict.csv')
-actionCode_df.columns = ['actionCode','actionName']
-actionCode_dict = dict(zip(actionCode_df.actionCode, actionCode_df.actionName))
-len(actionCode_dict)
-
-# Create function to view summary statistics of each variable.
-def mySummary(df):
-    for v in df.columns:
-            print ("\n" + v)
-            print(df[v].describe())
-
-# Create variable of unique actionCodes
-actionCodes = dfRaw['actionCode'].unique()
-dfRaw.actionCode.isna().sum()
-
-# Subset data frame per unique source system
-dfLOC = dfRaw.loc[dfRaw['sourceSystem/name'] == 'Library of Congress']
-dfHF = dfRaw.loc[dfRaw['sourceSystem/name'] == 'House floor actions']
-dfHC = dfRaw.loc[dfRaw['sourceSystem/name'] == 'House committee actions']
-dfS = dfRaw.loc[dfRaw['sourceSystem/name'] == 'Senate']
-
-# Create subset of data frame where actionCode is missing
-df = dfRaw[dfRaw['actionCode'].isnull()]
 
 def fillCode (row): 
   # Updated by Mateo for senate discharge type
@@ -147,8 +123,9 @@ def fillCode (row):
   This has only been tested on rows with null actionCodes.
   If rows with non-null actionCodes are used, this will not work as intended.
   After filling the actionCodes, it is recommended to apply a dictionary
-  of actionCodes and actionNames to complete the data.
+  of actionCodes and actionNames to complete the data for missing names.
   """
+  # Setting rules for actionCodes related to the House Committees:
   if row['sourceSystem/name'] == "House committee actions":
     if "referred to the subcommittee" in str.lower(row['text']):
       return '3000'  # Referred to House subcommittee
@@ -216,28 +193,32 @@ def fillCode (row):
   else:
     return row['actionCode']  # do nothing if source system doesn't match rules
 
-
-
 # Create a copy of original raw data to fill missing actionCodes
-df = dfRaw.copy()
+# df_all = pd.read_csv('data/event_logs/ALLCongress_BillActions_RAW.csv')
+df = df_all.copy()
 
 # Use df.apply with a lambda function to fill the missing actionCodes
-# It is very important only to pass rows to the function which have a null actionCode.
+# It is very important only to pass rows to the function which have a null
+# actionCode in order to avoid overwriting the original code.
 df['actionCode'] = df.apply(lambda row: fillCode(row) if pd.isnull(row['actionCode']) else row['actionCode'], axis=1)
 
-# Number of null actionCodes in original data
-print(dfRaw.actionCode.isna().sum(), "null codes before assigning text to code")
-print(df.actionCode.isna().sum(), "null codes after assigning text to code\n")
+# Number of null actionCodes in data
+print(df_all.actionCode.isna().sum(), "actions with null codes before calling fillCode()")
+print(df.actionCode.isna().sum(), "actions with null codes after calling fillCode()\n")
 
+# Number of null actionNames in data
+# Since we didn't edit actionNames as part of fillCode(), these values should match.
+print(df_all.actionCode.isna().sum(), "actions with null names before calling fillCode()")
+print(df.actionName.isna().sum(), "actions with null names after calling fillCode()")
 
-#merge actionNames
-print(df.actionName.isna().sum(), "null names before assigning code to name")
-
+# Fill actionNames by merging pandas df of actionCodes with the df of
+# all actions with filled actionCodes.
 df = pd.merge(df.drop('actionName', axis = 1), actionCode_df, how='left', on='actionCode')
 
-print(df.actionName.isna().sum(), "null names after assigning code to name\n\nTop 5 codes without name and their counts:")
+print(df.actionName.isna().sum(), "actions with null names after merging\n")
+print("\nTop 5 codes without name and their counts:")
 print(df[df.actionName.isna()]['actionCode'].value_counts()[:5])
 
-#output to csv
+# Output completed df to csv
 df.to_csv('data/event_logs/ALLCongress_Bill_Actions_RAW_filled.csv', index=False)
 
