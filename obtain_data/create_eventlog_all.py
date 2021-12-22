@@ -158,9 +158,9 @@ def fillCode (row):
       return '20000' # Resolving differences -- Senate actions
     elif row['type'] == "Discharge":
       if re.match('Senate Committee.*?discharged.*?', row['text']) is not None:
-        return 'H12300'
+        return '14500'
       if re.match('Motion to discharge Senate Committee*', row['text']) is not None:
-        return 'H17000'
+        return 'SenateMotionDischarge'
     # Veto codes added by Kat 21 Dec 2021
     elif row['type'] == "Veto":
       if "failed" in str.lower(row['text']):
